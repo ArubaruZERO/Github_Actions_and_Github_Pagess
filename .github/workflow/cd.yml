@@ -1,0 +1,23 @@
+name: Continuos Deployment workflow
+
+# decidimos cuando queremos ejecutarlo
+on:
+ push:
+  branches:
+   - master
+# definir que queremos ejecutar
+jobs:
+  cd:
+    runs-on: ubuntu-latest
+    steps:
+      # Clonamos el repositorio actual donde esta el fichero
+      - name: Clone repository
+        uses: actions/checkout@v2
+      # Instalar las dependencias, usamos run para nuestro comandos y uses para otros
+      - name: Install
+        run: npm install
+      - name: Build
+        run: npm run build
+      # Subir el dist y lo tenemos en el deploy
+      - name: Deploy
+        run: npm run deploy
